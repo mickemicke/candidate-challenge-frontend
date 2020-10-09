@@ -38,6 +38,8 @@ We would also like to see at least one test for a component, written in the Java
 
 We leave the implementation details open ended as we would like to leave the instructions open for interpretation and creativity. 
 
+*Documentation for the API endpoint is available here: https://crudcrud.com/*
+
 
 ### Assessment
 We base the quality of your solution on these four factors:
