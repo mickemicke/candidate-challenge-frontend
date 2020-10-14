@@ -30,7 +30,7 @@ As Kaustik's products are centered around the scheduling and planning of human r
 
 
 ### Instructions
-Clone this repository to your local machine. You are provided with an API endpoint that includes data with some events: https://crudcrud.com/api/c974ef5540f34583aacee5422b10fc66/events
+Clone this repository to your local machine. You will be provided with an API endpoint from Kaustik that includes data with some events that you will use for this challenge.
 
 Your task is to create entities based on each event and present them on the page. If an event passes over midnight (00:00), the event should be split into two entities. 
 
