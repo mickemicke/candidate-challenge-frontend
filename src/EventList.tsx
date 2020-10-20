@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+
+import Grid from "@material-ui/core/Grid";
 import { EventInterface } from "./EventInterface";
 import Event from "./Event";
-
 
 type Props = {
   events: EventInterface[];
@@ -9,14 +10,12 @@ type Props = {
 
 function EventList({ events }: Props) {
   return (
-    <div>
-      {
-        events.map((event) => (
-          <Event key={event._id} event={event} />
-        ))
-      }
-    </div>
-  )
+    <Grid container spacing={3}>
+      {events.map((event) => (
+        <Event key={event._id} event={event} />
+      ))}
+    </Grid>
+  );
 }
 
 export default EventList;

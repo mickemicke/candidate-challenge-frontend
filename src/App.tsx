@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import { makeStyles } from "@material-ui/core/styles";
 import callApi from "./callApi";
 import { EventInterface } from "./EventInterface";
 import EventList from "./EventList";
+import Container from "@material-ui/core/Container";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 declare const process: {
   env: {
@@ -12,26 +15,53 @@ declare const process: {
 
 const url: string = process.env.REACT_APP_URL;
 
+const useStyles = makeStyles({
+  app: {
+    flexGrow: 1,
+    padding: "10px",
+  },
+});
+
 function App(): JSX.Element {
   const [events, setEvents] = useState<EventInterface[]>([]);
-  const [error, setError] = useState({ error: false, message: "" });
+  const [{ error, message }, setError] = useState({
+    error: false,
+    message: "",
+  });
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
+
   useEffect(() => {
     const getEvent = async () => {
       const response = await callApi<EventInterface[]>(url);
       console.log("response :>> ", response);
       if (response instanceof Error) {
+        setOpen(true);
         return setError({ error: true, message: response.message });
       }
-
+      setOpen(false);
       return setEvents(response);
     };
     getEvent();
   }, []);
 
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
-    <div className="App">
+    <Container className={classes.app}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          Could not get events. Please try again. Error: {message}
+        </Alert>
+      </Snackbar>
       <EventList events={events} />
-    </div>
+    </Container>
   );
 }
 
