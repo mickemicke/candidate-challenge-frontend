@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import callApi from "./callApi";
+import { EventInterface } from "./EventInterface";
+import EventList from "./EventList";
+
+declare const process: {
+  env: {
+    REACT_APP_URL: string;
+  };
+};
+
+const url: string = process.env.REACT_APP_URL;
 
 function App(): JSX.Element {
+  const [events, setEvents] = useState<EventInterface[]>([]);
+  const [error, setError] = useState({ error: false, message: "" });
+  useEffect(() => {
+    const getEvent = async () => {
+      const response = await callApi<EventInterface[]>(url);
+      console.log("response :>> ", response);
+      if (response instanceof Error) {
+        return setError({ error: true, message: response.message });
+      }
+
+      return setEvents(response);
+    };
+    getEvent();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <EventList events={events} />
     </div>
   );
 }
