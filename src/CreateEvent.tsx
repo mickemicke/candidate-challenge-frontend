@@ -17,7 +17,11 @@ function CreateEvent({ createEvent }: CreateEvent) {
   };
   return (
     <div>
-      <IconButton color="inherit" onClick={() => handleVisibility(true)}>
+      <IconButton
+        color="inherit"
+        onClick={() => handleVisibility(true)}
+        aria-label="add an event"
+      >
         <AddIcon />
       </IconButton>
       <CreateEventDialog

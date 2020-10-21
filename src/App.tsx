@@ -25,13 +25,13 @@ function App(): JSX.Element {
   const [open, setOpen] = useState(false);
   const getEvents = async () => {
     const response = await callApi<EventInterface[]>(url);
-    console.log("response :>> ", response);
+    // console.log("response :>> ", response);
     if (response instanceof Error) {
       setOpen(true);
       return setError({ error: true, message: response.message });
     }
     const entities = createEntities(response);
-    console.log("entities :>> ", entities);
+    // console.log("entities :>> ", entities);
     setOpen(false);
     return setEvents(entities);
   };
