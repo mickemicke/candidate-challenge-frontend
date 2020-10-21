@@ -11,8 +11,8 @@ type Props = {
 function EventList({ events }: Props) {
   return (
     <Grid container spacing={3}>
-      {events.map((event) => (
-        <Event key={event._id} event={event} />
+      {events.map((event, i: number) => (
+        <Event key={`${event._id}_${i}`} event={event} />
       ))}
     </Grid>
   );
